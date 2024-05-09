@@ -1,0 +1,89 @@
+{
+    "graphName": "demoGraph",
+    "threadPoolConfig": {
+        "coreSize": 4,
+        "maxSize": 8,
+        "queueSize": 512
+    },
+    "secondThreadPoolConfig": {
+        "coreSize": 2,
+        "maxSize": 4,
+        "queueSize": 256
+    },
+    "requireAllNodesSuccess": true,
+    "stages": {
+        "processList": {
+            "stageName": "processList",
+            "description": "",
+            "dependency": [],
+            "nodes": {
+                "createFirstList": {
+                    "nodeName": "createFirstList",
+                    "description": "",
+                    "clz": "com.example.dag.business.action.CreateFirstListAction",
+                    "conditionClz": "com.example.dag.business.condition.RandomCondition",
+                    "dependency": [],
+                    "extraParam": {
+                        "size": "100000"
+                    }
+                },
+                "createSecondList": {
+                    "nodeName": "createSecondList",
+                    "description": "",
+                    "clz": "com.example.dag.business.action.CreateSecondListAction",
+                    "dependency": [],
+                    "extraParam": {
+                        "origin": "100000000",
+                        "bound": "1000000000000",
+                        "size": "2000000"
+                    },
+                    "timeout": 150
+                },
+                "mergeTwoList": {
+                    "nodeName": "mergeTwoList",
+                    "description": "",
+                    "clz": "com.example.dag.business.action.MergeTwoListAction",
+                    "dependency": [
+                        "createFirstList",
+                        "createSecondList"
+                    ]
+                }
+            }
+        },
+        "printLog": {
+            "stageName": "printLog",
+            "description": "",
+            "dependency": [
+                "processList"
+            ],
+            "nodes": {
+                "stop": {
+                    "nodeName": "stop",
+                    "description": "",
+                    "clz": "com.example.dag.business.action.StopGraphAction",
+                    "dependency": [],
+                    "extraParam": {
+                        "stopReason": "test"
+                    }
+                },
+                "simple": {
+                    "nodeName": "simple",
+                    "description": "",
+                    "clz": "com.example.dag.business.action.SimpleAction",
+                    "dependency": [
+                        "stop"
+                    ]
+                },
+                "log": {
+                    "nodeName": "log",
+                    "description": "",
+                    "clz": "com.example.dag.business.action.LogAction",
+                    "dependency": [
+                        "simple"
+                    ],
+                    "forced": true
+                }
+            }
+        }
+    }
+}
