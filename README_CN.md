@@ -291,3 +291,9 @@ boolean finished = DirectedAcyclicGraphExecutorEngine.syncExecuteGraphWithTimeou
 AsyncTaskResult asyncTaskResult = DirectedAcyclicGraphExecutorEngine.asyncExecuteGraph(businessContext);
 boolean finished = asyncTaskResult.get(timeout);
 ```
+
+### 有向无环图可视化
+```java
+byte[] image = DirectedAcyclicGraphExecutorEngine.getGraphImage(graphName);
+```
+<img src="image.png" alt="有向无环图可视化">

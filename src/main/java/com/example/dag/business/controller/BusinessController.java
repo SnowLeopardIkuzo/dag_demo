@@ -3,10 +3,8 @@ package com.example.dag.business.controller;
 import com.example.dag.business.exception.BusinessException;
 import com.example.dag.business.service.BusinessService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -52,6 +50,15 @@ public class BusinessController {
             return Map.of("code", -1, "message", e.getMessage());
         } catch (Exception e) {
             return Map.of("code", -2, "message", e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getImage(@RequestParam(defaultValue = "demoGraph") String graphName) {
+        try {
+            return businessService.getGraphImage(graphName);
+        } catch (Exception e) {
+            return null;
         }
     }
 

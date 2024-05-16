@@ -39,4 +39,8 @@ public class BusinessService {
         return businessContext.getMergedList().size();
     }
 
+    public byte[] getGraphImage(String graphName) {
+        return DirectedAcyclicGraphExecutorEngine.getGraphImage(graphName);
+    }
+
 }
